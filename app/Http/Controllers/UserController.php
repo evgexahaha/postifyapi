@@ -120,6 +120,8 @@ class UserController extends Controller
         return response()->json([
             'data' => [
                 'success' => true,
+                'photo_profile' => $user->photo_profile,
+                'desc_profile' => $user->desc_profile,
                 'userPosts' => $userPosts,
             ]
         ]);
