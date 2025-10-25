@@ -155,34 +155,6 @@ class UserController extends Controller
         ]);
     }
 
-    public function updatePhotoProfile(Request $request)
-    {
-        $token = $request->bearerToken();
-        $user = User::where('api_token', $token)->first();
-
-        if (!$user) {
-            return response()->json([
-                'data' => [
-                    'success' => false,
-                    'message' => 'User not authenticated',
-                ]
-            ], 401);
-        }
-
-        $image = $request->file('photo_profile')->store('profile', 'public');
-        $imageUrl = asset('storage/' . $image);
-
-        $user->photo_profile = $imageUrl;
-        $user->save();
-
-        return response()->json([
-            'data' => [
-                'success' => true,
-                'photo_profile' => $imageUrl,
-            ]
-        ]);
-    }
-
     public function uploadDescProfile(Request $request)
     {
         $token = $request->bearerToken();
@@ -208,27 +180,18 @@ class UserController extends Controller
         ]);
     }
 
-    public function updateDescProfile(Request $request)
+    public function anyUser($name)
     {
-        $token = $request->bearerToken();
-        $user = User::where('api_token', $token)->first();
-
-        if (!$user) {
-            return response()->json([
-                'data' => [
-                    'success' => false,
-                    'message' => 'User not authenticated',
-                ]
-            ], 401);
-        }
-
-        $user->desc_profile = $request->desc_profile;
-        $user->save();
+        $user = User::where('name', $name)->first();
 
         return response()->json([
             'data' => [
                 'success' => true,
+                'id' => $user->id,
+                'name' => $user->name,
+                'photo_profile' => $user->photo_profile,
                 'desc_profile' => $user->desc_profile,
+                'created_at' => $user->created_at,
             ]
         ]);
     }

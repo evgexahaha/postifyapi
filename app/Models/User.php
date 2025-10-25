@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'api_token',
+        'created_at',
     ];
 
     /**
@@ -31,7 +32,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'remember_token',
-        'created_at',
         'updated_at',
     ];
 

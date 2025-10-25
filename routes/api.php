@@ -15,9 +15,9 @@ Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/profile', [UserController::class, 'profile']);
 Route::post('/profile/new/photo', [UserController::class, 'uploadPhotoProfile']);
-Route::post('/profile/update/photo', [UserController::class, 'updatePhotoProfile']);
 Route::post('/profile/new/desc', [UserController::class, 'uploadDescProfile']);
-Route::post('/profile/update/desc', [UserController::class, 'updateDescProfile']);
+//Route::post('/profile/new/comment', [UserController::class, 'uploadCommentProfile']);
+Route::get('/profile/{name}', [UserController::class, 'anyUser']);
 
 Route::post('/post/new', [PostController::class, 'store']);
 Route::get('/posts', [PostController::class, 'all']);
