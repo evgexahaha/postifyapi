@@ -63,4 +63,29 @@ class CommentController extends Controller
             ]
         ]);
     }
+
+    public function destroy(Request $request, $id) {
+        $token = $request->bearerToken();
+        $user = User::where('api_token', $token)->first();
+
+        if (!$user) {
+            return response()->json([
+                'data' => [
+                    'success' => false,
+                    'message' => 'User not authenticated',
+                ]
+            ], 401);
+        }
+
+        $comment = Comment::find($id);
+
+        $comment->delete();
+
+        return response()->json([
+            'data' => [
+                'success' => true,
+                'message' => 'Comment deleted'
+            ]
+        ]);
+    }
 }

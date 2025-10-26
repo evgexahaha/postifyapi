@@ -27,3 +27,4 @@ Route::put('/post/{id}/update', [PostController::class, 'update']);
 
 Route::get('/post/{id}/comments', [CommentController::class, 'index']);
 Route::post('/post/{id}/comment/new', [CommentController::class, 'store']);
+Route::delete('/post/{id}/comment/destroy', [CommentController::class, 'destroy']);
