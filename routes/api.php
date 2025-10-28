@@ -23,7 +23,7 @@ Route::post('/post/new', [PostController::class, 'store']);
 Route::get('/posts', [PostController::class, 'all']);
 Route::get('/posts/{id}', [PostController::class, 'get']);
 Route::delete('/post/{id}/delete', [PostController::class, 'destroy']);
-Route::put('/post/{id}/update', [PostController::class, 'update']);
+Route::post('/post/{id}/update', [PostController::class, 'update']);
 
 Route::get('/post/{id}/comments', [CommentController::class, 'index']);
 Route::post('/post/{id}/comment/new', [CommentController::class, 'store']);

@@ -117,18 +117,41 @@ class PostController extends Controller
         ]);
     }
 
-//    public function update(Request $request, $id)
-//    {
-//        $token = $request->bearerToken();
-//        $user = User::where('api_token', $token)->first();
-//
-//        if (!$user) {
-//            return response()->json([
-//                'data' => [
-//                    'success' => false,
-//                    'message' => 'User not authenticated',
-//                ]
-//            ], 401);
-//        }
-//    }
+    public function update(Request $request, $id)
+    {
+        $token = $request->bearerToken();
+        $user = User::where('api_token', $token)->first();
+
+        if (!$user) {
+            return response()->json([
+                'data' => [
+                    'success' => false,
+                    'message' => 'User not authenticated',
+                ]
+            ], 401);
+        }
+
+        $post = Post::find($id);
+
+        $updateData = [
+            'title' => $request->title ?? $post->title,
+            'description' => $request->description ?? $post->description,
+        ];
+
+        if ($request->hasFile('photo_url')) {
+            $image = $request->file('photo_url')->store('posts', 'public');
+            $imageUrl = asset('storage/' . $image);
+            $updateData['photo_url'] = $imageUrl;
+        }
+
+        $post->update($updateData);
+        $post->refresh();
+
+        return response()->json([
+            'data' => [
+                'success' => true,
+                'post' => $post,
+            ]
+        ]);
+    }
 }
